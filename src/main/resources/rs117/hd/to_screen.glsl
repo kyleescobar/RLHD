@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, Adam <Adam@sigterm.info>
+ * Copyright (c) 2018, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,33 +23,25 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-struct uniform {
-  int cameraYaw;
-  int cameraPitch;
-  int centerX;
-  int centerY;
-  int zoom;
-  int cameraX;
-  int cameraY;
-  int cameraZ;
-  int4 sinCosTable[2048];
-};
+/*
+ * Convert a vertex to screen space
+ */
+vec3 toScreen(ivec3 vertex, int cameraYaw, int cameraPitch, int centerX, int centerY, int zoom) {
+  float yawSin = sin(cameraYaw * UNIT);
+  float yawCos = cos(cameraYaw * UNIT);
 
-struct shared_data {
-  int totalNum[12]; // number of faces with a given priority
-  int totalDistance[12]; // sum of distances to faces of a given priority
-  int totalMappedNum[18]; // number of faces with a given adjusted priority
-  int min10; // minimum distance to a face of priority 10
-  int dfs[0]; // packed face id and distance, size 512 for small, 6144 for large
-};
+  float pitchSin = sin(cameraPitch * UNIT);
+  float pitchCos = cos(cameraPitch * UNIT);
 
-struct ModelInfo {
-  int offset;   // offset into buffer
-  int uvOffset; // offset into uv buffer
-  int size;     // length in faces
-  int idx;      // write idx in target buffer
-  int flags;    // hillskew, plane, radius, orientation
-  int x;        // scene position x
-  int y;        // scene position y
-  int z;        // scene position z
-};
+  float rotatedX = (vertex.z * yawSin) + (vertex.x * yawCos);
+  float rotatedZ = (vertex.z * yawCos) - (vertex.x * yawSin);
+
+  float var13 = (vertex.y * pitchCos) - (rotatedZ * pitchSin);
+  float var12 = (vertex.y * pitchSin) + (rotatedZ * pitchCos);
+
+  float x = rotatedX * zoom / var12 + centerX;
+  float y = var13 * zoom / var12 + centerY;
+  float z = -var12; // in OpenGL depth is negative
+
+  return vec3(x, y, z);
+}
