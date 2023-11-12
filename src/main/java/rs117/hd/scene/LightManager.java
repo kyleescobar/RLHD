@@ -182,7 +182,7 @@ public class LightManager {
 		}
 
 		long frameTime = System.currentTimeMillis() - lastFrameTime;
-		Tile[][][] tiles = sceneContext.scene.getExtendedTiles();
+		Tile[][][] tiles = sceneContext.scene.getTiles();
 		int[][][] tileHeights = sceneContext.scene.getTileHeights();
 
 		Iterator<SceneLight> lightIterator = sceneContext.lights.iterator();
@@ -433,7 +433,7 @@ public class LightManager {
 			}
 		}
 
-		for (Tile[][] plane : sceneContext.scene.getExtendedTiles()) {
+		for (Tile[][] plane : sceneContext.scene.getTiles()) {
 			for (Tile[] column : plane) {
 				for (Tile tile : column) {
 					if (tile == null) {

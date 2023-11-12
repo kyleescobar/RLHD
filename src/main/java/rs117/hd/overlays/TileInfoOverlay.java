@@ -75,7 +75,7 @@ public class TileInfoOverlay extends net.runelite.client.ui.overlay.Overlay {
 		g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
 		Scene scene = client.getScene();
-		Tile[][][] tiles = scene.getExtendedTiles();
+		Tile[][][] tiles = scene.getTiles();
 		int plane = ctrlPressed ? MAX_Z - 1 : client.getPlane();
 		for (int z = plane; z >= 0; z--) {
 			for (int isBridge = 1; isBridge >= 0; isBridge--) {

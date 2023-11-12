@@ -58,7 +58,7 @@ public
 class SceneUploader {
 	public static final int SCENE_ID_MASK = 0xFFFF;
 	public static final int EXCLUDED_FROM_SCENE_BUFFER = 0xFFFFFFFF;
-	public static final int SCENE_OFFSET = (Constants.EXTENDED_SCENE_SIZE - Constants.SCENE_SIZE) / 2; // offset for sxy -> msxy
+	public static final int SCENE_OFFSET = 0; // offset for sxy -> msxy
 
 	private static final float[] UP_NORMAL = { 0, -1, 0 };
 
@@ -86,7 +86,7 @@ class SceneUploader {
 		for (int z = 0; z < Constants.MAX_Z; ++z) {
 			for (int x = 0; x < Constants.EXTENDED_SCENE_SIZE; ++x) {
 				for (int y = 0; y < Constants.EXTENDED_SCENE_SIZE; ++y) {
-					Tile tile = sceneContext.scene.getExtendedTiles()[z][x][y];
+					Tile tile = sceneContext.scene.getTiles()[z][x][y];
 					upload(sceneContext, tile, x, y, z);
 				}
 			}
@@ -108,10 +108,10 @@ class SceneUploader {
 	}
 
 	public void fillGaps(SceneContext sceneContext) {
-		int sceneMin = sceneContext.expandedMapLoadingChunks * -8;
-		int sceneMax = SCENE_SIZE + sceneContext.expandedMapLoadingChunks * 8;
+		int sceneMin = 0;
+		int sceneMax = 104;
 
-		Tile[][][] extendedTiles = sceneContext.scene.getExtendedTiles();
+		Tile[][][] extendedTiles = sceneContext.scene.getTiles();
 		for (int tileZ = 0; tileZ < Constants.MAX_Z; ++tileZ) {
 			for (int tileExX = 0; tileExX < Constants.EXTENDED_SCENE_SIZE; ++tileExX) {
 				for (int tileExY = 0; tileExY < Constants.EXTENDED_SCENE_SIZE; ++tileExY) {

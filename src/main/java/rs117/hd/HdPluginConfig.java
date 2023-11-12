@@ -80,7 +80,7 @@ public interface HdPluginConfig extends Config
 
 	String KEY_EXPANDED_MAP_LOADING_CHUNKS = "expandedMapLoadingChunks";
 	@Range(
-		max = 5
+		max = 0
 	)
 	@ConfigItem(
 		keyName = KEY_EXPANDED_MAP_LOADING_CHUNKS,
@@ -90,7 +90,7 @@ public interface HdPluginConfig extends Config
 		section = generalSettings
 	)
 	default int expandedMapLoadingChunks() {
-		return 3;
+		return 0;
 	}
 
 	@ConfigItem(

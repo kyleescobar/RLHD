@@ -107,7 +107,7 @@ public class ProceduralGenerator {
 		// between underlays and overlays for custom blending
 		sceneContext.vertexIsOverlay = new HashMap<>();
 
-		Tile[][][] tiles = sceneContext.scene.getExtendedTiles();
+		Tile[][][] tiles = sceneContext.scene.getTiles();
 		for (int z = 0; z < MAX_Z; ++z) {
 			for (int x = 0; x < EXTENDED_SCENE_SIZE; ++x)
 				for (int y = 0; y < EXTENDED_SCENE_SIZE; ++y)
@@ -368,7 +368,7 @@ public class ProceduralGenerator {
 		}
 
 		Scene scene = sceneContext.scene;
-		Tile[][][] tiles = scene.getExtendedTiles();
+		Tile[][][] tiles = scene.getTiles();
 
 		// figure out which vertices are water and assign some data
 		for (int z = 0; z < MAX_Z; ++z) {
@@ -698,7 +698,7 @@ public class ProceduralGenerator {
 	{
 		sceneContext.vertexTerrainNormals = new HashMap<>();
 
-		for (Tile[][] plane : sceneContext.scene.getExtendedTiles()) {
+		for (Tile[][] plane : sceneContext.scene.getTiles()) {
 			for (Tile[] column : plane) {
 				for (Tile tile : column) {
 					if (tile != null) {
